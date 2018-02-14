@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @RestController
@@ -28,10 +29,12 @@ public class StartHandler {
     }
 
     @GetMapping
-    public String getStartScreen(HttpServletRequest request) {
-
-        System.out.println("Inside: startHandler");
-
+    public String getStartScreen(HttpServletResponse response, HttpSession session) throws IOException {
+        if (session.getAttribute("isLoggedIn") != null) {
+            if (session.getAttribute("isLoggedIn").equals(true)) {
+                response.sendRedirect("/hangman");
+            }
+        }
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/startScreen.twig");
         JtwigModel model = JtwigModel.newModel();
 
@@ -40,14 +43,12 @@ public class StartHandler {
 
     @PostMapping
     public void createPlayer(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Cookie cookie = CookieCreator.createCookie();
-
-        response.addCookie(cookie);
-
         String nick = request.getParameter("nick");
         Player player = new Player(nick);
+        HttpSession session = request.getSession();
+        session.setAttribute("player", player);
+        session.setAttribute("isLoggedIn", true);
 
-        loginController.addPlayer(cookie, player);
         response.sendRedirect("/hangman");
     }
 }
