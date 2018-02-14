@@ -1,16 +1,22 @@
 package com.codecool.webhangman.controller;
 
+import com.codecool.webhangman.dao.PlayerDao;
+import com.codecool.webhangman.model.Player;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/")
 public class HangmanHandler {
 
+    private PlayerDao playerDao;
+
+    public HangmanHandler(PlayerDao playerDao) {
+        this.playerDao = playerDao;
+    }
 
     @GetMapping
     public String getStartScreen() {
@@ -19,4 +25,6 @@ public class HangmanHandler {
 
         return template.render(model);
     }
+
+
 }
