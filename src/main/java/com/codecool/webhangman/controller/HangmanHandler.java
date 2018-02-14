@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HangmanHandler {
 
 
-    @GetMapping(path = "")
+    @GetMapping
     public String getStartScreen() {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/startScreen.twig");
         JtwigModel model = JtwigModel.newModel();
