@@ -2,7 +2,6 @@ package com.codecool.webhangman.controller;
 
 import com.codecool.webhangman.dao.PlayerDao;
 import com.codecool.webhangman.model.Player;
-import com.codecool.webhangman.service.CookieCreator;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,11 +19,9 @@ import java.io.IOException;
 public class StartHandler {
 
     private PlayerDao playerDao;
-    private LoginController loginController;
 
-    public StartHandler(PlayerDao playerDao, LoginController loginController) {
+    public StartHandler(PlayerDao playerDao) {
         this.playerDao = playerDao;
-        this.loginController = loginController;
     }
 
     @GetMapping
