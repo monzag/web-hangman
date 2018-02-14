@@ -26,5 +26,10 @@ public class HangmanHandler {
         return template.render(model);
     }
 
+    @PostMapping
+    public void createPlayer(HttpServletRequest request) {
+        String nick = request.getParameter("nick");
+        Player player = new Player(nick);
 
+    }
 }
