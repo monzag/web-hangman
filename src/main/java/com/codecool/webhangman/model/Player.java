@@ -16,10 +16,13 @@ public class Player {
     private Integer score;
     private transient Integer healthPoints;
 
-    public Player(String nick, Integer score, Integer healthPoints) {
+    public Player() {
+    }
+
+    public Player(String nick) {
         this.nick = nick;
-        this.score = score;
-        this.healthPoints = healthPoints;
+        this.score = 0;
+        this.healthPoints = 5;
     }
 
     //region setters and getters
