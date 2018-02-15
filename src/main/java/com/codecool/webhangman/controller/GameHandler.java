@@ -1,7 +1,5 @@
 package com.codecool.webhangman.controller;
 
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import com.codecool.webhangman.model.TemplateProcessorFacade;
