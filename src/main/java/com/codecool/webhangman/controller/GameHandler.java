@@ -49,10 +49,4 @@ public class GameHandler {
         return "LOSEE HP";
     }
 
-    private String getPage() {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/game.twig");
-        JtwigModel model = JtwigModel.newModel();
-
-        return template.render(model);
-    }
 }
