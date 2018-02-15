@@ -17,9 +17,16 @@ public class SessionInterpreter {
             final String key = "isLoggedIn";
 
             Object obj = httpSession.getAttribute(key);
-            return obj != null &&
-                    obj instanceof Boolean &&
-                    obj.equals(true);
+
+            if (obj == null) {
+                return false;
+            }
+
+            if (!(obj instanceof Boolean)) {
+                throw new IllegalArgumentException("IsLoggedIn attr should be Boolean");
+            }
+
+            return obj.equals(true);
         }
     }
 
