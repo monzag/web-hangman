@@ -1,0 +1,64 @@
+body, html {
+    background-image: url("../pics/hangmanINTRO.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+input {
+    border-radius: 4px;
+    background-color: aliceblue;
+    font-size: 20px;
+    padding: 5px;
+    margin: 2px;
+    width: 200px;
+}
+
+/*label {*/
+    /*color: beige;*/
+/*}*/
+
+button {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 5px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 2px;
+}
+
+button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -15px;
+    transition: 0.5s;
+}
+
+button:hover span {
+    padding-right: 20px;
+}
+
+button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
