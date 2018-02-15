@@ -11,16 +11,17 @@ public class SessionInterpreter {
 
     public static class RequestInterpreter {
         private HttpServletRequest request;
+        private HttpSession httpSession;
 
         private RequestInterpreter(HttpServletRequest request) {
             this.request = request;
+            this.httpSession = request.getSession();
         }
 
         public boolean isUserLoggedIn() {
-            HttpSession httpSession = this.request.getSession();
             final String key = Identity.IS_LOGGED_IN.getKey();
 
-            Object obj = httpSession.getAttribute(key);
+            Object obj = this.httpSession.getAttribute(key);
 
             if (obj == null) {
                 return false;
@@ -34,15 +35,13 @@ public class SessionInterpreter {
         }
 
         public Player retrievePlayer() {
-            HttpSession httpSession = this.request.getSession();
             final String key = Identity.PLAYER.getKey();
-            return (Player) httpSession.getAttribute(key);
+            return (Player) this.httpSession.getAttribute(key);
         }
 
         public GuessTable retrieveGuessTable() {
-            HttpSession httpSession = this.request.getSession();
             final String key = Identity.GUESS_TABLE.getKey();
-            return (GuessTable) httpSession.getAttribute(key);
+            return (GuessTable) this.httpSession.getAttribute(key);
         }
     }
 
