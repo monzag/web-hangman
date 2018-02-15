@@ -1,5 +1,6 @@
 package com.codecool.webhangman.controller;
 
+import com.codecool.webhangman.model.Activity;
 import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import com.codecool.webhangman.model.TemplateProcessorFacade;
@@ -37,13 +38,22 @@ public class GameHandler {
 
     @PostMapping
     public String doPost(HttpServletRequest request) {
+        Activity activity = handleTurn(request);
+
+
+
+
+        return "LOSEE HP";
+    }
+
+    private Activity handleTurn(HttpServletRequest request) {
         SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
 
         Player player = requestInterpreter.retrievePlayer();
         GuessTable guessTable = requestInterpreter.retrieveGuessTable();
         String userGuess = request.getParameter("user-guess");
-        this.gameBoardService.handleGame(guessTable, player, userGuess);
+        this.gameBoardService.doNextMove(guessTable, player, userGuess);
 
-        return "LOSEE HP";
+        return new Activity(player, guessTable);
     }
 }
