@@ -34,13 +34,15 @@ public class SessionInterpreter {
         }
 
         public Player retrievePlayer() {
+            HttpSession httpSession = this.request.getSession();
             final String key = Identity.PLAYER.getKey();
-            return (Player) this.request.getAttribute(key);
+            return (Player) httpSession.getAttribute(key);
         }
 
         public GuessTable retrieveGuessTable() {
+            HttpSession httpSession = this.request.getSession();
             final String key = Identity.GUESS_TABLE.getKey();
-            return (GuessTable) this.request.getAttribute(key);
+            return (GuessTable) httpSession.getAttribute(key);
         }
     }
 
