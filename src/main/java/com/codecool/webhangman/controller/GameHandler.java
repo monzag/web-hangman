@@ -14,7 +14,25 @@ import java.io.IOException;
 public class GameHandler {
 
     @GetMapping
-    public String doGet(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        return "hello in gamehandler";
+    public String doGet(HttpServletResponse response, HttpServletRequest request) {
+        TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
+
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-snippet.html";
+        processor.modelWith("content_path", contentPath);
+
+        return processor.render();
+    }
+
+
+    public String doPost(HttpServletResponse response, HttpServletRequest request) {
+
+//
+//
+//        String contentPath = "classpath:/" + managerOption.getPath();
+//        model.with("content_path", contentPath);
+
+
+
+        return null;
     }
 }
