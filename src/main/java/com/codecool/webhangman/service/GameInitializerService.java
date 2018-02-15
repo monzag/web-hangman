@@ -35,6 +35,6 @@ public class GameInitializerService {
 
     private void registerGuessTableInSession(HttpServletRequest request, GuessTable guessTable) {
         final String key = Identity.GUESS_TABLE.getKey();
-        request.setAttribute(key, guessTable);
+        request.getSession().setAttribute(key, guessTable);
     }
 }
