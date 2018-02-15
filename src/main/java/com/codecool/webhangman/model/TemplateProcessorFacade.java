@@ -1,4 +1,4 @@
-package com.codecool.webhangman.controller;
+package com.codecool.webhangman.model;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
