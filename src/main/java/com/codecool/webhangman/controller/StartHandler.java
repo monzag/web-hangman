@@ -2,8 +2,6 @@ package com.codecool.webhangman.controller;
 
 import com.codecool.webhangman.dao.PlayerDao;
 import com.codecool.webhangman.model.Player;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +23,13 @@ public class StartHandler {
     }
 
     @GetMapping
-    public String getStartScreen(HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public String getStartScreen() {
+        TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/startScreen.twig");
-        JtwigModel model = JtwigModel.newModel();
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/start-screen-snippet.html";
+        processor.modelWith("content_path", contentPath);
 
-        return template.render(model);
+        return processor.render();
     }
 
     @PostMapping
