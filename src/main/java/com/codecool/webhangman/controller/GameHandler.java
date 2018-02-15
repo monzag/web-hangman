@@ -14,16 +14,7 @@ import java.io.IOException;
 public class GameHandler {
 
     @GetMapping
-    public String doGet(HttpServletResponse response, HttpSession session) throws IOException {
-
-        if (session.getAttribute("isLoggedIn") != null &&
-                session.getAttribute("isLoggedIn").equals(true)) {
-            return "Inside: GameHandler";
-        } else {
-            response.sendRedirect("/");
-        }
-
-
-        return "You must log in!";
+    public String doGet(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        return "hello in gamehandler";
     }
 }

@@ -25,12 +25,8 @@ public class StartHandler {
     }
 
     @GetMapping
-    public String getStartScreen(HttpServletResponse response, HttpSession session) throws IOException {
-        if (session.getAttribute("isLoggedIn") != null) {
-            if (session.getAttribute("isLoggedIn").equals(true)) {
-                response.sendRedirect("/hangman");
-            }
-        }
+    public String getStartScreen(HttpServletResponse response, HttpServletRequest request) throws IOException {
+
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/startScreen.twig");
         JtwigModel model = JtwigModel.newModel();
 
@@ -39,9 +35,11 @@ public class StartHandler {
 
     @PostMapping
     public void createPlayer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         String nick = request.getParameter("nick");
         Player player = new Player(nick);
         HttpSession session = request.getSession();
+
         session.setAttribute("player", player);
         session.setAttribute("isLoggedIn", true);
 
