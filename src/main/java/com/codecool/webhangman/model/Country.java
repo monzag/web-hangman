@@ -15,6 +15,7 @@ public class Country {
     private String name;
     private String capital;
 
+    public Country() {}
 
     public Country(String name, String capital) {
         this.name = name;

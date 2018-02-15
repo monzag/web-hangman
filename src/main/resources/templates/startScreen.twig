@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>hangman</title>
-  <link rel="stylesheet" type="text/css" href="assets/css/login.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+    <meta charset="utf-8">
+    <title>hangman</title>
+    {% include content_css ignore missing %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
 </head>
 
 <body>
-  <form method="POST">
-   <h3>
-   <lable>
-   	Nick :
-        <input type="text" name="nick" required>
-   </lable>
-   <button type="submit"><span>play</span></button>
-   <h3>
-  </form>
+{% include content_path ignore missing %}
 </body>
 </html>
-
