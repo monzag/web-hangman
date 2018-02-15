@@ -5,12 +5,14 @@ import java.util.Set;
 
 public class GuessTable {
     private Country country;
+    private Set<String> validLetters;
     private Set<String> usedLetters;
     private Set<String> usedWords;
 
     {
         this.usedLetters = new HashSet<>();
         this.usedWords = new HashSet<>();
+        this.validLetters = new HashSet<>();
     }
 
     public GuessTable(Country country) {
@@ -22,7 +24,12 @@ public class GuessTable {
         guess = guess.toLowerCase();
 
         if (guess.length() == 1) {
-            return capitalName.contains(guess);
+            boolean isCorrect = capitalName.contains(guess);
+
+            if (isCorrect) {
+                this.validLetters.add(guess);
+            }
+            return isCorrect;
 
         } else if (guess.length() > 1) {
             return capitalName.equals(guess);
@@ -45,6 +52,14 @@ public class GuessTable {
     public boolean isAlreadyUsed(String sentence) {
         sentence = sentence.toLowerCase();
         return this.usedWords.contains(sentence) || this.usedLetters.contains(sentence);
+    }
+
+    public Country getCountry( ) {
+        return country;
+    }
+
+    public Set<String> getValidLetters( ) {
+        return validLetters;
     }
 
     public Set<String> getUsedLetters( ) {
