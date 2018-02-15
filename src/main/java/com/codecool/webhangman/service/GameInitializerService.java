@@ -24,8 +24,8 @@ public class GameInitializerService {
         Player player = this.userCreatorService.createPlayer(request);
         this.userCreatorService.registerUserInSession(player, request);
 
-        GuessTable gameBoardService = createGuessTable(request);
-        registerGuessTableInSession(request, gameBoardService);
+        GuessTable guessTable = createGuessTable(request);
+        registerGuessTableInSession(request, guessTable);
     }
 
     private GuessTable createGuessTable(HttpServletRequest request) {
