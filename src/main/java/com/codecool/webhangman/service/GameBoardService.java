@@ -6,14 +6,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GameBoardService {
-    public void handleGame(GuessTable guessTable, Player player, String userGuess) {
+    public void doNextMove(GuessTable guessTable, Player player, String userGuess) {
         if (guessTable.isAlreadyUsed(userGuess)) {
             return;
         }
 
-        if (guessTable.doCountryNameContains(userGuess)) {
-            
-        } else {
+        if (!guessTable.doCountryNameContains(userGuess)) {
             reducePlayerHealthBasedOnGuess(userGuess, player);
         }
 
@@ -28,6 +26,4 @@ public class GameBoardService {
             player.reduceHealthPoints(2);
         }
     }
-
-
 }
