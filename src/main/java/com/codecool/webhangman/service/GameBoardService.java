@@ -57,4 +57,7 @@ public class GameBoardService {
         return guess;
     }
 
+    private boolean isLetterGuess(String letter, Set<String> userGuessing) {
+        return userGuessing.contains((String) letter);
+    }
 }
