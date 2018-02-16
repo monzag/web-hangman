@@ -11,8 +11,7 @@
 <section class="game-board">
     <div class="draw">
         <figure>
-            <img src="{{ photo-src }}">
-            
+            <img src="{{ photo_src }}">
         </figure>
         <h3>{{ guess }}</h3>
         <form method="POST">
@@ -26,6 +25,6 @@
     <div class="usage">
         <h1>user :       {{ player.getNick() }}</h1>
         <h1>time:</h1>
-        <h1>user guess: <br />{{ guessTable.getUsedLetters() }}</h1>
+        <h1>user guess: <br />{{ guessTable.getUsedLetters() }} </h1>
     </div>
 </section>
