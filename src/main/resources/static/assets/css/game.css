@@ -161,12 +161,11 @@ button:hover span:after {
 }
 
 .usage h1 {
-    margin-top: 10%;
+    margin: 10px;
     font-family: eraser, "Allerta Stencil", SansSerif;
     color: aliceblue;
     font-size: 30px;
     padding: 5px;
-    margin: 2px;
 }
 
 
@@ -192,4 +191,17 @@ input {
     padding: 5px;
     margin: 2px;
     width: 200px;
+}
+
+.answers {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.answers p {
+    margin: 5px;
+    font-family: eraser, "Allerta Stencil", SansSerif;
+    color: aliceblue;
+    font-size: 25px;
 }
