@@ -37,5 +37,24 @@ public class GameBoardService {
         return guess;
     }
 
+    private String convertToGuess(String capital, Set<String> userGuessing) {
+        String guess = "";
+        Character letter;
+        for (int i = 0; i < capital.length(); i++) {
+            letter = capital.charAt(i);
+            if (letter != ' ') {
+                String letters = String.valueOf(letter);
+                if (isLetterGuess(letters, userGuessing)) {
+                    guess += letters;
+                } else {
+                    guess += "_ ";
+                }
+            } else {
+                    guess += "  ";
+            }
+        }
+
+        return guess;
+    }
 
 }
