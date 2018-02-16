@@ -15,16 +15,19 @@ public class SessionManager implements HandlerInterceptor{
                              HttpServletResponse response, Object handler) throws Exception {
 
         SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+        boolean isUserLoggedIn = requestInterpreter.isUserLoggedIn();
         String currentPath = request.getServletPath();
 
         Function<String, Boolean> isUserAtGameUrl = p -> p.equals("/hangman");
         Function<String, Boolean> isUserAtLoginUrl = p -> p.equals("/");
 
-        if (requestInterpreter.isUserLoggedIn() && !isUserAtGameUrl.apply(currentPath)) {
+        if (isUserLoggedIn && !isUserAtGameUrl.apply(currentPath)) {
             response.sendRedirect("/hangman");
+            return false;
 
-        } else if (!requestInterpreter.isUserLoggedIn() && !isUserAtLoginUrl.apply(currentPath)) {
+        } else if (!isUserLoggedIn && !isUserAtLoginUrl.apply(currentPath)) {
             response.sendRedirect("/");
+            return false;
         }
 
         return true;
