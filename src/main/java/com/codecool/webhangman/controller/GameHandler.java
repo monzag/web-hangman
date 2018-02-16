@@ -26,9 +26,15 @@ public class GameHandler {
     public String doGet(HttpServletResponse response, HttpServletRequest request) {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
+        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+        Player player = requestInterpreter.retrievePlayer();
+        GuessTable guessTable = requestInterpreter.retrieveGuessTable();
+
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
+        processor.modelWith("player", player);
+        processor.modelWith("guess", gameBoardService.getCapitalAsGuess(guessTable));
 
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-snippet.html";
         processor.modelWith("content_path", contentPath);
