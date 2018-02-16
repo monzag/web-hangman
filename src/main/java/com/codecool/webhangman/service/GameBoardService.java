@@ -8,6 +8,13 @@ import java.util.Set;
 
 @Service
 public class GameBoardService {
+
+    private DrawService drawService;
+
+    public GameBoardService() {
+        this.drawService = new DrawService();
+    }
+
     public void doNextMove(GuessTable guessTable, Player player, String userGuess) {
         if (guessTable.isAlreadyUsed(userGuess)) {
             return;
@@ -62,8 +69,7 @@ public class GameBoardService {
     }
 
     public String getHangmanPath(Player player) {
-        DrawService drawService = new DrawService();
-        return drawService.getDrawPath(player.getHealthPoints());
+        return this.drawService.getDrawPath(player.getHealthPoints());
 
     }
 }
