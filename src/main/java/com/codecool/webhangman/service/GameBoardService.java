@@ -58,6 +58,11 @@ public class GameBoardService {
     }
 
     private boolean isLetterGuess(String letter, Set<String> userGuessing) {
-        return userGuessing.contains((String) letter);
+        return userGuessing.contains(letter);
+    }
+
+    public String getHangmanPath(Player player) {
+        return DrawService.getDrawPath(player.getHealthPoints());
+
     }
 }
