@@ -62,7 +62,8 @@ public class GameBoardService {
     }
 
     public String getHangmanPath(Player player) {
-        return DrawService.getDrawPath(player.getHealthPoints());
+        DrawService drawService = new DrawService();
+        return drawService.getDrawPath(player.getHealthPoints());
 
     }
 }
