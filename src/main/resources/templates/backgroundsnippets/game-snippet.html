@@ -1,1 +1,30 @@
-<h1>Hello in game snippet</h1>
+<header class="primary-header">
+    <h1>hangman</h1>
+    <nav class="primary-nav">
+        <ul>
+            <li><a href="">highscore</a></li>
+            <li><a href="">help</a></li>
+            <button type="submit"><span>exit</span></button>
+        </ul>
+    </nav>
+</header>
+<section class="game-board">
+    <div class="draw">
+        <figure>
+            <img src="../assets/pics/hangman10.png">
+        </figure>
+        <h3>{{ guess }}</h3>
+        <form method="POST">
+            <div class="inputField">
+                <label for="name-input-box">Your guess:</label>
+                <input type="text" name="userGuess" id="name-input-box" required>
+                <button type="submit">check</button>
+            </div>
+        </form>
+    </div>
+    <div class="usage">
+        <h1>user :       {{ player.getNick() }}</h1>
+        <h1>time:</h1>
+        <h1>user guess:  {{ guessTable.getUsedLetters() }}</h1>
+    </div>
+</section>
