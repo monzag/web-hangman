@@ -19,9 +19,10 @@ public class SessionManager implements HandlerInterceptor{
         String currentPath = request.getServletPath();
 
         Function<String, Boolean> isUserAtGameUrl = p -> p.equals("/hangman");
+        Function<String, Boolean> isUserWinOrLose = p -> p.equals("/hangman/win");
         Function<String, Boolean> isUserAtLoginUrl = p -> p.equals("/");
 
-        if (isUserLoggedIn && !isUserAtGameUrl.apply(currentPath)) {
+        if (isUserLoggedIn && (!isUserAtGameUrl.apply(currentPath) && !isUserWinOrLose.apply(currentPath))) {
             response.sendRedirect("/hangman");
             return false;
 
