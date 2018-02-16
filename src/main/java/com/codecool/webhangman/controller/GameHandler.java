@@ -39,7 +39,9 @@ public class GameHandler {
         processor.modelWith("photo_src", path);
         processor.modelWith("guessTable", guessTable);
 
-        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-snippet.html";
+        String gameBoard = "classpath:/" + "templates/backgroundsnippets/game-board.html";
+        processor.modelWith("game_board", gameBoard);
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
         processor.modelWith("content_path", contentPath);
 
         return processor.render();
