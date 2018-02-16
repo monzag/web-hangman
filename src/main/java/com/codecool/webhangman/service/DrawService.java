@@ -24,7 +24,7 @@ public class DrawService {
         this.pictures.put(4, "../assets/pics/hangman4hp.png");
         this.pictures.put(5, "../assets/pics/hangman5hp.png");
         this.pictures.put(6, "../assets/pics/hangman6hp.png");
-        this.pictures.put(7, "assets/pics/hangman7hp.png");
+        this.pictures.put(7, "../assets/pics/hangman7hp.png");
     }
 }
 
