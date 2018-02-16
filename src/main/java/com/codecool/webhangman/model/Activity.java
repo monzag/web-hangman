@@ -1,7 +1,5 @@
 package com.codecool.webhangman.model;
 
-import java.util.Set;
-
 public class Activity {
     public final Player player;
     public final GuessTable guessTable;
@@ -11,18 +9,15 @@ public class Activity {
         this.guessTable = guessTable;
     }
 
-    public boolean hasWon() {
+    public boolean hasWon(String guess) {
         if (!this.player.isAlive()) {
             return false;
         }
 
         Country country = this.guessTable.getCountry();
         String capital = country.getCapital().toLowerCase();
-
-        Set<String> validLetters = this.guessTable.getValidLetters();
-        return validLetters.size() == capital.length() ||
+        return capital.equals(guess) ||
                 this.guessTable.getUsedWords().stream()
                                               .anyMatch(usedWord -> usedWord.equals(capital));
-
     }
 }
