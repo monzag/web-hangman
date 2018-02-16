@@ -1,5 +1,4 @@
-<section class="game-board">
- <div class="draw">
+<div class="draw">
     <figure>
         <img src="{{ photo_src }}">
     </figure>
@@ -15,6 +14,12 @@
  <div class="usage">
     <h1>user :       {{ player.getNick() }}</h1>
     <h1>time:</h1>
-    <h1>user guess: <br />{{ guessTable.getUsedLetters() }} </h1>
+     <br/>
+    <h1>user guess:</h1>
+    <div class="answers">
+        <p> letters  {{ guessTable.getUsedLetters() }}</p>
+    </div>
+     <div class="answers">
+         <p> words   {{ guessTable.getUsedWords() }}</p>
+     </div>
  </div>
-</section>
