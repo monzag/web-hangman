@@ -30,7 +30,8 @@ public class GameHandler {
         Player player = requestInterpreter.retrievePlayer();
         GuessTable guessTable = requestInterpreter.retrieveGuessTable();
         String guess = gameBoardService.getCapitalAsGuess(guessTable);
-        String path = gameBoardService.getHangmanPath(player);
+        String path = "classpath:/static/" + gameBoardService.getHangmanPath(player);
+        System.out.println(path);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
