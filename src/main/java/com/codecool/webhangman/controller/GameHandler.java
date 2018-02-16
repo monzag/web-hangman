@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/hangman")
@@ -47,11 +48,9 @@ public class GameHandler {
     }
 
     @PostMapping
-    public String doPost(HttpServletRequest request) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Activity activity = handleTurn(request);
-
-
-        return "LOSEE HP";
+        response.sendRedirect("/hangman");
     }
 
     private Activity handleTurn(HttpServletRequest request) {
