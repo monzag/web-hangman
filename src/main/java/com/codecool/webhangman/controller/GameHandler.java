@@ -28,9 +28,9 @@ public class GameHandler {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
         Player player = getPlayer(request);
-        GuessTable guessTable = requestInterpreter.retrieveGuessTable();
-        String guess = gameBoardService.getCapitalAsGuess(guessTable);
+        GuessTable guessTable = getGuessTable(request);
         String path = gameBoardService.getHangmanPath(player);
+        String guess = gameBoardService.getCapitalAsGuess(guessTable);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
@@ -63,7 +63,7 @@ public class GameHandler {
 
     private Activity handleTurn(HttpServletRequest request) {
         Player player = getPlayer(request);
-        GuessTable guessTable = requestInterpreter.retrieveGuessTable();
+        GuessTable guessTable = getGuessTable(request);
         String userGuess = request.getParameter("user-guess");
         this.gameBoardService.doNextMove(guessTable, player, userGuess);
 
@@ -73,6 +73,11 @@ public class GameHandler {
     private Player getPlayer(HttpServletRequest request) {
         SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
         return requestInterpreter.retrievePlayer();
+    }
+
+    private GuessTable getGuessTable(HttpServletRequest request) {
+        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+        return requestInterpreter.retrieveGuessTable();
     }
 
 }
