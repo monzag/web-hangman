@@ -26,7 +26,6 @@ public class GameHandler {
     @GetMapping
     public String doGet(HttpServletRequest request) {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
-
         Player player = getPlayer(request);
         GuessTable guessTable = getGuessTable(request);
         String path = gameBoardService.getHangmanPath(player);
@@ -39,10 +38,10 @@ public class GameHandler {
         processor.modelWith("photo_src", path);
         processor.modelWith("guessTable", guessTable);
 
-        String gameBoard = "classpath:/" + "templates/backgroundsnippets/game-board.html";
-        processor.modelWith("game_board", gameBoard);
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
         processor.modelWith("content_path", contentPath);
+        contentPath = "classpath:/" + "templates/backgroundsnippets/game-board.html";
+        processor.modelWith("game_board", contentPath);
 
         return processor.render();
     }
@@ -50,18 +49,30 @@ public class GameHandler {
     @PostMapping
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Activity activity = handleTurn(request);
+        GuessTable guessTable = getGuessTable(request);
 
-        if (activity.hasWon()) {
+        if (activity.hasWon(gameBoardService.getCapitalAsGuess(guessTable))) {
+            response.sendRedirect("/hangman/win");
 
         } else {
             response.sendRedirect("/hangman");
         }
     }
 
-//    @GetMapping(path = "/win")
-//    public String doGet() {
-//
-//    }
+    @GetMapping(path = "/win")
+    public String getWin(HttpServletRequest request) {
+        TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
+
+        String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
+        processor.modelWith("content_css", contentCss);
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
+        processor.modelWith("content_path", contentPath);
+        contentPath = "classpath:/" + "templates/backgroundsnippets/game-end.html";
+        processor.modelWith("game_board", contentPath);
+        processor.modelWith("result_text", "Congratulation, you are winner!!");
+
+        return processor.render();
+    }
 
     private Activity handleTurn(HttpServletRequest request) {
         Player player = getPlayer(request);
