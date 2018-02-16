@@ -24,7 +24,7 @@ public class GameHandler {
     }
 
     @GetMapping
-    public String doGet(HttpServletResponse response, HttpServletRequest request) {
+    public String doGet(HttpServletRequest request) {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
         Player player = getPlayer(request);
