@@ -29,12 +29,15 @@ public class GameHandler {
         SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
         Player player = requestInterpreter.retrievePlayer();
         GuessTable guessTable = requestInterpreter.retrieveGuessTable();
-
+        String guess = gameBoardService.getCapitalAsGuess(guessTable);
+        String path = gameBoardService.getHangmanPath(player);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
         processor.modelWith("player", player);
-        processor.modelWith("guess", gameBoardService.getCapitalAsGuess(guessTable));
+        processor.modelWith("guess", guess);
+        processor.modelWith("photo-src", path);
+        processor.modelWith("guessTable", guessTable);
 
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-snippet.html";
         processor.modelWith("content_path", contentPath);
@@ -45,8 +48,6 @@ public class GameHandler {
     @PostMapping
     public String doPost(HttpServletRequest request) {
         Activity activity = handleTurn(request);
-
-
 
 
         return "LOSEE HP";
