@@ -4,6 +4,8 @@ import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class GameBoardService {
     public void doNextMove(GuessTable guessTable, Player player, String userGuess) {
@@ -26,4 +28,14 @@ public class GameBoardService {
             player.reduceHealthPoints(2);
         }
     }
+
+    public String getCapitalAsGuess(GuessTable guessTable) {
+        String capital = guessTable.getCountry().getCapital();
+        Set<String> userGuessing = guessTable.getValidLetters();
+        String guess = convertToGuess(capital, userGuessing);
+
+        return guess;
+    }
+
+
 }
