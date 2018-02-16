@@ -27,18 +27,16 @@ public class GameHandler {
     public String doGet(HttpServletResponse response, HttpServletRequest request) {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
-        Player player = requestInterpreter.retrievePlayer();
+        Player player = getPlayer(request);
         GuessTable guessTable = requestInterpreter.retrieveGuessTable();
         String guess = gameBoardService.getCapitalAsGuess(guessTable);
-        String path = "classpath:/static/" + gameBoardService.getHangmanPath(player);
-        System.out.println(path);
+        String path = gameBoardService.getHangmanPath(player);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
         processor.modelWith("player", player);
         processor.modelWith("guess", guess);
-        processor.modelWith("photo-src", path);
+        processor.modelWith("photo_src", path);
         processor.modelWith("guessTable", guessTable);
 
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-snippet.html";
@@ -50,18 +48,31 @@ public class GameHandler {
     @PostMapping
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Activity activity = handleTurn(request);
-        response.sendRedirect("/hangman");
+
+        if (activity.hasWon()) {
+
+        } else {
+            response.sendRedirect("/hangman");
+        }
     }
 
-    private Activity handleTurn(HttpServletRequest request) {
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+//    @GetMapping(path = "/win")
+//    public String doGet() {
+//
+//    }
 
-        Player player = requestInterpreter.retrievePlayer();
+    private Activity handleTurn(HttpServletRequest request) {
+        Player player = getPlayer(request);
         GuessTable guessTable = requestInterpreter.retrieveGuessTable();
         String userGuess = request.getParameter("user-guess");
         this.gameBoardService.doNextMove(guessTable, player, userGuess);
 
         return new Activity(player, guessTable);
+    }
+
+    private Player getPlayer(HttpServletRequest request) {
+        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+        return requestInterpreter.retrievePlayer();
     }
 
 }
