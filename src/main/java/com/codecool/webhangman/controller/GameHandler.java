@@ -64,7 +64,7 @@ public class GameHandler {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
         Player player = getPlayer(request);
-        String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
+        String contentCss = "classpath:/" + "templates/cssSettings/game-end-css-snippet.html";
         processor.modelWith("content_css", contentCss);
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
         processor.modelWith("content_path", contentPath);
