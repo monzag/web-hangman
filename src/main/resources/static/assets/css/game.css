@@ -205,3 +205,19 @@ input {
     color: aliceblue;
     font-size: 25px;
 }
+
+.result {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.result h1 {
+    margin: 10px;
+    font-family: eraser, "Allerta Stencil", SansSerif;
+    color: aliceblue;
+    font-size: 30px;
+    padding: 5px;
+}
