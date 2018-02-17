@@ -52,24 +52,33 @@ public class GameHandler {
         GuessTable guessTable = getGuessTable(request);
 
         if (activity.hasWon(gameBoardService.getCapitalAsGuess(guessTable))) {
-            response.sendRedirect("/hangman/win");
+            response.sendRedirect("/hangman/end");
 
         } else {
             response.sendRedirect("/hangman");
         }
     }
 
-    @GetMapping(path = "/win")
-    public String getWin(HttpServletRequest request) {
+    @GetMapping(path = "/end")
+    public String getEndGame(HttpServletRequest request) {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
 
+        Player player = getPlayer(request);
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
         processor.modelWith("content_path", contentPath);
         contentPath = "classpath:/" + "templates/backgroundsnippets/game-end.html";
         processor.modelWith("game_board", contentPath);
-        processor.modelWith("result_text", "Congratulation, you are winner!!");
+
+        String resultText;
+        if (player.getHealthPoints() < 1) {
+            resultText = player.getNick() + " You lose :(";
+        } else {
+            resultText = player.getNick() + " congratulation, you are winner!!";
+        }
+
+        processor.modelWith("result_text", resultText);
 
         return processor.render();
     }
