@@ -36,7 +36,7 @@ public class StartHandler {
 
     @PostMapping
     public void initializeGameWithDeliveredData(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        this.gameInitializerService.initialize(request);
+        this.gameInitializerService.initializeFromRequest(request);
         response.sendRedirect("/hangman");
     }
 }
