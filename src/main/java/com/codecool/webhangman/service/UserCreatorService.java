@@ -15,6 +15,10 @@ public class UserCreatorService {
         return new Player(nick);
     }
 
+//    public Player refreshPlayer(String nick) {
+//        return new Player(nick);
+//    }
+
     public void registerUserInSession(Player player, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
