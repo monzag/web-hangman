@@ -1,6 +1,27 @@
-<section class="result">
-    <h1> {{ result_text }}</h1>
-    <h1> highscore </h1>
-    <h1>play again?</h1>
+<section class="board">
+    <div class="result">
+        <div class="row">
+            <h1 id="resultText"> {{ result_text }}</h1>
+            <button type="submit"><span>play again</span></button>
+        </div>
+        <table class="highscore">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>player</th>
+                <th>time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for score in highscore %}
+            <tr>
+                <td></td>
+                <td> {{ score.getPlayerName() }} </td>
+                <td> {{ score.getMillisecondsSpent() }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
 </section>
 
