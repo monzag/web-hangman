@@ -16,5 +16,8 @@ public class HighscoreService {
         this.scoreDao = scoreDao;
     }
 
+    public List<Score> getHighscore() {
+        return scoreDao.findTop10ByOrderByMillisecondsSpentAsc();
+    }
 
 }
