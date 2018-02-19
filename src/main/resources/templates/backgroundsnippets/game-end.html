@@ -1,8 +1,10 @@
 <section class="board">
     <div class="result">
         <div class="row">
-            <h1 id="resultText"> {{ result_text }}</h1>
-            <button type="submit"><span>play again</span></button>
+            <form method="POST">
+                <h1 id="resultText"> {{ result_text }}</h1>
+                <button type="submit"><span>play again</span></button>
+            </form>
         </div>
         <table class="highscore">
             <thead>
