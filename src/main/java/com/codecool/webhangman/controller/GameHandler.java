@@ -73,9 +73,9 @@ public class GameHandler {
 
         String resultText;
         if (player.getHealthPoints() < 1) {
-            resultText = player.getNick() + " You lose :(";
+            resultText = player.getNick() + " - you lose :(";
         } else {
-            resultText = player.getNick() + " congratulation, you are winner!!";
+            resultText = "Congratulation " + player.getNick() + " - you are winner!!";
         }
 
         processor.modelWith("result_text", resultText);
