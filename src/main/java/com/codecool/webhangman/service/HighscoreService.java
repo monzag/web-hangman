@@ -12,5 +12,9 @@ public class HighscoreService {
 
     private ScoreDao scoreDao;
 
+    public HighscoreService(ScoreDao scoreDao) {
+        this.scoreDao = scoreDao;
+    }
+
 
 }
