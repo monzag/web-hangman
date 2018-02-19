@@ -20,15 +20,18 @@ public class GameInitializerService {
         this.userCreatorService = userCreatorService;
     }
 
-    public void initialize(HttpServletRequest request) {
+    public void initializeFromRequest(HttpServletRequest request) {
         Player player = this.userCreatorService.createPlayer(request);
-        this.userCreatorService.registerUserInSession(player, request);
-
-        GuessTable guessTable = createGuessTable(request);
-        registerGuessTableInSession(request, guessTable);
+        initialize(request, player);
     }
 
-    private GuessTable createGuessTable(HttpServletRequest request) {
+//    public void initializeRegisterPlayer(HttpServletRequest request, Player oldPlayer) {
+//        request.getSession().invalidate();
+//        Player player = this.userCreatorService.refreshPlayer(oldPlayer.getNick());
+//        initialize(request, player);
+//    }
+
+    private GuessTable createGuessTable() {
         Country loadedCountry = this.randomCountryLoaderService.loadRandomCountry();
         return new GuessTable(loadedCountry);
     }
@@ -37,4 +40,12 @@ public class GameInitializerService {
         final String key = Identity.GUESS_TABLE.getKey();
         request.getSession().setAttribute(key, guessTable);
     }
+
+    private void initialize(HttpServletRequest request, Player player) {
+        this.userCreatorService.registerUserInSession(player, request);
+        GuessTable guessTable = createGuessTable();
+        registerGuessTableInSession(request, guessTable);
+    }
+
+
 }
