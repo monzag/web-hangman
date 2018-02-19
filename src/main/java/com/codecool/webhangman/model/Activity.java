@@ -20,4 +20,8 @@ public class Activity {
                 this.guessTable.getUsedWords().stream()
                                               .anyMatch(usedWord -> usedWord.equals(capital));
     }
+
+    public boolean hasLost() {
+        return player.getHealthPoints() < 1;
+    }
 }
