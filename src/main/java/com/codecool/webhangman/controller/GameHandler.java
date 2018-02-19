@@ -5,6 +5,7 @@ import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import com.codecool.webhangman.model.TemplateProcessorFacade;
 import com.codecool.webhangman.service.GameBoardService;
+import com.codecool.webhangman.service.HighscoreService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +19,11 @@ import java.io.IOException;
 @RequestMapping("/hangman")
 public class GameHandler {
     private GameBoardService gameBoardService;
+    private HighscoreService highscoreService;
 
-    public GameHandler(GameBoardService gameBoardService) {
+    public GameHandler(GameBoardService gameBoardService, HighscoreService highscoreService) {
         this.gameBoardService = gameBoardService;
+        this.highscoreService = highscoreService;
     }
 
     @GetMapping
@@ -75,10 +78,12 @@ public class GameHandler {
         if (player.getHealthPoints() < 1) {
             resultText = player.getNick() + " - you lose :(";
         } else {
+            highscoreService.addToHighscore(player);
             resultText = "Congratulation " + player.getNick() + " - you are winner!!";
         }
 
         processor.modelWith("result_text", resultText);
+        processor.modelWith("highscore", highscoreService.getHighscore());
 
         return processor.render();
     }
