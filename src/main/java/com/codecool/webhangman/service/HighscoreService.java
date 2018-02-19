@@ -20,4 +20,8 @@ public class HighscoreService {
         return scoreDao.findTop10ByOrderByMillisecondsSpentAsc();
     }
 
+    public void addToHighscore(Player player) {
+        Score score = new Score(player);
+        scoreDao.save(score);
+    }
 }
