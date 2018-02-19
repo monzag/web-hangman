@@ -5,6 +5,7 @@ import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import com.codecool.webhangman.model.TemplateProcessorFacade;
 import com.codecool.webhangman.service.GameBoardService;
+import com.codecool.webhangman.service.GameInitializerService;
 import com.codecool.webhangman.service.HighscoreService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +21,14 @@ import java.io.IOException;
 public class GameHandler {
     private GameBoardService gameBoardService;
     private HighscoreService highscoreService;
+    private GameInitializerService initializerService;
 
-    public GameHandler(GameBoardService gameBoardService, HighscoreService highscoreService) {
+    public GameHandler(GameBoardService gameBoardService, HighscoreService highscoreService,
+                       GameInitializerService initializerService) {
+
         this.gameBoardService = gameBoardService;
         this.highscoreService = highscoreService;
+        this.initializerService = initializerService;
     }
 
     @GetMapping
@@ -86,6 +91,13 @@ public class GameHandler {
         processor.modelWith("highscore", highscoreService.getHighscore());
 
         return processor.render();
+    }
+
+    @PostMapping("/end")
+    public void playAgain(HttpServletRequest request, HttpServletResponse response,
+                          GameInitializerService gameInitializerService) throws IOException {
+
+//        initializerService.initializeRegisterPlayer(request, getPlayer(request));
     }
 
     private Activity handleTurn(HttpServletRequest request) {
