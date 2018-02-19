@@ -54,7 +54,7 @@ public class GameHandler {
         Activity activity = handleTurn(request);
         GuessTable guessTable = getGuessTable(request);
 
-        if (activity.hasWon(gameBoardService.getCapitalAsGuess(guessTable))) {
+        if (activity.hasWon(gameBoardService.getCapitalAsGuess(guessTable)) || activity.hasLost()) {
             response.sendRedirect("/hangman/end");
 
         } else {
