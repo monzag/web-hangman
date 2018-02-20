@@ -21,7 +21,6 @@ public class GuessTable {
 
     public boolean doCountryNameContains(String guess) {
         String capitalName = this.country.getCapital().toLowerCase();
-        System.out.println(capitalName);
         guess = guess.toLowerCase();
 
         if (guess.length() == 1) {
