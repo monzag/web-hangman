@@ -21,10 +21,11 @@ public class SessionManager implements HandlerInterceptor{
         Function<String, Boolean> isUserAtGameUrl = p -> p.equals("/hangman");
         Function<String, Boolean> isGameEnd = p -> p.equals("/hangman/end");
         Function<String, Boolean> isGameRules = p -> p.equals("/hangman/rules");
+        Function<String, Boolean> isExit = p -> p.equals("/hangman/exit");
         Function<String, Boolean> isUserAtLoginUrl = p -> p.equals("/");
 
         if (isUserLoggedIn && (!isUserAtGameUrl.apply(currentPath) && !isGameEnd.apply(currentPath)
-                && !isGameRules.apply(currentPath))) {
+                && !isGameRules.apply(currentPath) && !isExit.apply(currentPath))) {
             response.sendRedirect("/hangman");
             return false;
 
