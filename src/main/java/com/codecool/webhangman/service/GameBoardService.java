@@ -72,4 +72,14 @@ public class GameBoardService {
         return this.drawService.getDrawPath(player.getHealthPoints());
 
     }
+
+    public String getHint(Player player, GuessTable guessTable) {
+        String hint = "";
+        if (player.getHealthPoints().equals(1)) {
+            String country = guessTable.getCountry().getName();
+            hint = "HINT! The capital of " + country;
+        }
+
+        return hint;
+    }
 }
