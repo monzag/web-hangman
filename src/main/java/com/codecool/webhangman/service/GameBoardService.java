@@ -46,6 +46,7 @@ public class GameBoardService {
 
     private String convertToGuess(String capital, Set<String> userGuessing) {
         StringBuilder guess = new StringBuilder();
+        System.out.println(capital);
         Character letter;
         for (int i = 0; i < capital.length(); i++) {
             letter = capital.charAt(i);
