@@ -272,3 +272,16 @@ input {
 .highscore tbody tr td:first-child::before {
     content: counter(row-num) ". ";
 }
+
+.result a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.result p {
+    margin: 5px;
+    font-family: eraser, "Allerta Stencil", SansSerif;
+    color: aliceblue;
+    font-size: 25px;
+    line-height: 1.2;
+}
