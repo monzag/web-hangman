@@ -71,10 +71,8 @@ public class GameHandler {
         Player player = getPlayer(request);
         String contentCss = "classpath:/" + "templates/cssSettings/game-end-css-snippet.html";
         processor.modelWith("content_css", contentCss);
-        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-end.html";
         processor.modelWith("content_path", contentPath);
-        contentPath = "classpath:/" + "templates/backgroundsnippets/game-end.html";
-        processor.modelWith("game_board", contentPath);
 
         String resultText;
         if (player.getHealthPoints() < 1) {
