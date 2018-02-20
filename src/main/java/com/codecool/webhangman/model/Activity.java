@@ -14,6 +14,7 @@ public class Activity {
             return false;
         }
 
+        guess = guess.replaceAll("  ", " ");
         Country country = this.guessTable.getCountry();
         String capital = country.getCapital().toLowerCase();
         return capital.equals(guess) ||
