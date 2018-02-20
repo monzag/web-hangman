@@ -7,7 +7,6 @@ import com.codecool.webhangman.model.TemplateProcessorFacade;
 import com.codecool.webhangman.service.GameBoardService;
 import com.codecool.webhangman.service.GameInitializerService;
 import com.codecool.webhangman.service.HighscoreService;
-import com.codecool.webhangman.service.RandomCountryLoaderService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
