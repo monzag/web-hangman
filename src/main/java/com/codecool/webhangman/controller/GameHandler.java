@@ -98,6 +98,19 @@ public class GameHandler {
 //        initializerService.initializeRegisterPlayer(request, getPlayer(request));
     }
 
+    @GetMapping("/rules")
+    public String getRules() {
+        TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
+
+        String contentCss = "classpath:/" + "templates/cssSettings/game-end-css-snippet.html";
+        processor.modelWith("content_css", contentCss);
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
+        processor.modelWith("content_path", contentPath);
+        contentPath = "classpath:/" + "templates/backgroundsnippets/game-rules.html";
+        processor.modelWith("game_board", contentPath);
+
+        return processor.render();
+    }
 
     private Activity handleTurn(HttpServletRequest request) {
         Player player = getPlayer(request);
