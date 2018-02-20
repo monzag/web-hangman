@@ -21,13 +21,11 @@ import java.io.IOException;
 public class GameHandler {
     private GameBoardService gameBoardService;
     private HighscoreService highscoreService;
-//    private GameInitializerService initializerService;
 
     public GameHandler(GameBoardService gameBoardService, HighscoreService highscoreService) {
 
         this.gameBoardService = gameBoardService;
         this.highscoreService = highscoreService;
-//        this.initializerService = initializerService;
     }
 
     @GetMapping
@@ -37,7 +35,6 @@ public class GameHandler {
         GuessTable guessTable = getGuessTable(request);
         String path = gameBoardService.getHangmanPath(player);
         String guess = gameBoardService.getCapitalAsGuess(guessTable);
-        System.out.println(guess);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
@@ -93,12 +90,6 @@ public class GameHandler {
         return processor.render();
     }
 
-    @PostMapping("/end")
-    public void playAgain(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-//        initializerService.initializeRegisterPlayer(request, getPlayer(request));
-    }
-
     @GetMapping("/rules")
     public String getRules() {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
@@ -115,7 +106,6 @@ public class GameHandler {
 
     @GetMapping("/exit")
     public void exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("here");
         request.getSession().invalidate();
         response.sendRedirect("/");
     }
