@@ -147,10 +147,11 @@ button:hover span:after {
     display: flex;
     justify-content: center;
     color: aliceblue;
-    font-family: "eraser", "Allerta Stencil", SansSerif;
+    font-family: eraser, "Allerta Stencil", SansSerif;
     font-size: xx-large;
     font-weight: 900;
     margin-top: 0%;
+    white-space: pre-wrap;
 }
 
 .usage {
