@@ -37,6 +37,7 @@ public class GameHandler {
         GuessTable guessTable = getGuessTable(request);
         String path = gameBoardService.getHangmanPath(player);
         String guess = gameBoardService.getCapitalAsGuess(guessTable);
+        System.out.println(guess);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
@@ -110,6 +111,13 @@ public class GameHandler {
         processor.modelWith("game_board", contentPath);
 
         return processor.render();
+    }
+
+    @GetMapping("/exit")
+    public void exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("here");
+        request.getSession().invalidate();
+        response.sendRedirect("/");
     }
 
     private Activity handleTurn(HttpServletRequest request) {
