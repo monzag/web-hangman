@@ -21,14 +21,13 @@ import java.io.IOException;
 public class GameHandler {
     private GameBoardService gameBoardService;
     private HighscoreService highscoreService;
-    private GameInitializerService initializerService;
+//    private GameInitializerService initializerService;
 
-    public GameHandler(GameBoardService gameBoardService, HighscoreService highscoreService,
-                       GameInitializerService initializerService) {
+    public GameHandler(GameBoardService gameBoardService, HighscoreService highscoreService) {
 
         this.gameBoardService = gameBoardService;
         this.highscoreService = highscoreService;
-        this.initializerService = initializerService;
+//        this.initializerService = initializerService;
     }
 
     @GetMapping
@@ -94,11 +93,11 @@ public class GameHandler {
     }
 
     @PostMapping("/end")
-    public void playAgain(HttpServletRequest request, HttpServletResponse response,
-                          GameInitializerService gameInitializerService) throws IOException {
+    public void playAgain(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 //        initializerService.initializeRegisterPlayer(request, getPlayer(request));
     }
+
 
     private Activity handleTurn(HttpServletRequest request) {
         Player player = getPlayer(request);
