@@ -45,23 +45,23 @@ public class GameBoardService {
     }
 
     private String convertToGuess(String capital, Set<String> userGuessing) {
-        String guess = "";
+        StringBuilder guess = new StringBuilder();
         Character letter;
         for (int i = 0; i < capital.length(); i++) {
             letter = capital.charAt(i);
-            if (letter != ' ') {
+            if (Character.isWhitespace(letter)) {
+                guess.append("  ");
+            } else {
                 String letters = String.valueOf(letter);
                 if (isLetterGuess(letters, userGuessing)) {
-                    guess += letters;
+                    guess.append(letter);
                 } else {
-                    guess += "_ ";
+                    guess.append("_ ");
                 }
-            } else {
-                    guess += "  ";
             }
         }
 
-        return guess;
+        return guess.toString();
     }
 
     private boolean isLetterGuess(String letter, Set<String> userGuessing) {
