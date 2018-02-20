@@ -25,11 +25,12 @@ public class GameInitializerService {
         initialize(request, player);
     }
 
-//    public void initializeRegisterPlayer(HttpServletRequest request, Player oldPlayer) {
-//        request.getSession().invalidate();
-//        Player player = this.userCreatorService.refreshPlayer(oldPlayer.getNick());
-//        initialize(request, player);
-//    }
+    public void initializeRegisterPlayer(HttpServletRequest request, Player oldPlayer) {
+        String nick = oldPlayer.getNick();
+        request.getSession().invalidate();
+        Player player = this.userCreatorService.refreshPlayer(nick);
+        initialize(request, player);
+    }
 
     private GuessTable createGuessTable() {
         Country loadedCountry = this.randomCountryLoaderService.loadRandomCountry();
