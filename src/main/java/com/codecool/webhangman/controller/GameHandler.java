@@ -5,7 +5,6 @@ import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import com.codecool.webhangman.model.TemplateProcessorFacade;
 import com.codecool.webhangman.service.GameBoardService;
-import com.codecool.webhangman.service.GameInitializerService;
 import com.codecool.webhangman.service.HighscoreService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +41,7 @@ public class GameHandler {
         processor.modelWith("guess", guess);
         processor.modelWith("photo_src", path);
         processor.modelWith("guessTable", guessTable);
+        processor.modelWith("hint", gameBoardService.getHint(player, guessTable));
 
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
         processor.modelWith("content_path", contentPath);
