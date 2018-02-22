@@ -9,7 +9,7 @@ public class Activity {
         this.guessTable = guessTable;
     }
 
-    public boolean hasWon(String guess) {
+    public boolean hasPlayerWon(String guess) {
         if (!this.player.isAlive()) {
             return false;
         }
@@ -22,7 +22,7 @@ public class Activity {
                                               .anyMatch(usedWord -> usedWord.equals(capital));
     }
 
-    public boolean hasLost() {
+    public boolean hasPlayerLost() {
         return player.getHealthPoints() < 1;
     }
 }
