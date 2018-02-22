@@ -1,5 +1,11 @@
 package com.codecool.webhangman.controller;
 
+import com.codecool.webhangman.service.permissionsmanagementservice.AccessGuardian;
+import com.codecool.webhangman.service.permissionsmanagementservice.LoggedInAccessPeeper;
+import com.codecool.webhangman.service.permissionsmanagementservice.UnLoggedAccessPeeper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -7,7 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.function.Function;
 
-public class SessionManager implements HandlerInterceptor{
+@Controller
+@Scope("prototype")
+public class SessionManager implements HandlerInterceptor {
+    private AccessGuardian accessGuardian;
+
+    public SessionManager(AccessGuardian accessGuardian) {
+        this.accessGuardian = accessGuardian;
+    }
+
+    public AccessGuardian getAccessGuardian( ) {
+        return accessGuardian;
+    }
+
+    public void setAccessGuardian(AccessGuardian accessGuardian) {
+        this.accessGuardian = accessGuardian;
+    }
 
     // This method is called before the controller
     @Override
@@ -18,19 +39,15 @@ public class SessionManager implements HandlerInterceptor{
         boolean isUserLoggedIn = requestInterpreter.isUserLoggedIn();
         String currentPath = request.getServletPath();
 
-        Function<String, Boolean> isUserAtGameUrl = p -> p.equals("/hangman");
-        Function<String, Boolean> isGameEnd = p -> p.equals("/hangman/end");
-        Function<String, Boolean> isGameRules = p -> p.equals("/hangman/rules");
-        Function<String, Boolean> isExit = p -> p.equals("/hangman/exit");
-        Function<String, Boolean> isUserAtLoginUrl = p -> p.equals("/");
+        LoggedInAccessPeeper loggedInAccessPeeper = this.accessGuardian.getLoggedInAccessPeeper();
+        UnLoggedAccessPeeper unLoggedAccessPeeper = this.accessGuardian.getUnLoggedAccessPeeper();
 
-        if (isUserLoggedIn && (!isUserAtGameUrl.apply(currentPath) && !isGameEnd.apply(currentPath)
-                && !isGameRules.apply(currentPath) && !isExit.apply(currentPath))) {
-            response.sendRedirect("/hangman");
+        if (isUserLoggedIn && !loggedInAccessPeeper.contains(currentPath)) {
+            response.sendRedirect(loggedInAccessPeeper.getDefaultPath());
             return false;
 
-        } else if (!isUserLoggedIn && !isUserAtLoginUrl.apply(currentPath)) {
-            response.sendRedirect("/");
+        } else if (!isUserLoggedIn && !unLoggedAccessPeeper.contains(currentPath)) {
+            response.sendRedirect(unLoggedAccessPeeper.getDefaultPath());
             return false;
         }
 
