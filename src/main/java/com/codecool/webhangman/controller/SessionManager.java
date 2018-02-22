@@ -22,6 +22,7 @@ public class SessionManager implements HandlerInterceptor {
         this.accessGuardian = accessGuardian;
     }
 
+    //region setters and getters
     public AccessGuardian getAccessGuardian( ) {
         return accessGuardian;
     }
@@ -29,6 +30,7 @@ public class SessionManager implements HandlerInterceptor {
     public void setAccessGuardian(AccessGuardian accessGuardian) {
         this.accessGuardian = accessGuardian;
     }
+    //endregion
 
     // This method is called before the controller
     @Override
