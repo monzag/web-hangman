@@ -1,30 +1,59 @@
 package com.codecool.webhangman.controller;
 
+import com.codecool.webhangman.service.sessioninterpreter.RequestInterpreter;
+import com.codecool.webhangman.service.sessioninterpreter.SessionInterpreterService;
+import com.codecool.webhangman.service.permissionsmanagementservice.AccessGuardian;
+import com.codecool.webhangman.service.permissionsmanagementservice.LoggedInAccessPeeper;
+import com.codecool.webhangman.service.permissionsmanagementservice.UnLoggedAccessPeeper;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.function.Function;
 
-public class SessionManager implements HandlerInterceptor{
+@Controller
+@Scope("prototype")
+public class SessionManager implements HandlerInterceptor {
+    private AccessGuardian accessGuardian;
+    private SessionInterpreterService sessionInterpreterService;
+
+    public SessionManager(AccessGuardian accessGuardian,
+                          SessionInterpreterService sessionInterpreterService) {
+        this.accessGuardian = accessGuardian;
+        this.sessionInterpreterService = sessionInterpreterService;
+    }
+
+    //region setters and getters
+    public AccessGuardian getAccessGuardian( ) {
+        return accessGuardian;
+    }
+
+    public void setAccessGuardian(AccessGuardian accessGuardian) {
+        this.accessGuardian = accessGuardian;
+    }
+    //endregion
 
     // This method is called before the controller
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+        RequestInterpreter requestInterpreter = this.sessionInterpreterService.create(request);
+        boolean isUserLoggedIn = requestInterpreter.isUserLoggedIn();
         String currentPath = request.getServletPath();
 
-        Function<String, Boolean> isUserAtGameUrl = p -> p.equals("/hangman");
-        Function<String, Boolean> isUserAtLoginUrl = p -> p.equals("/");
+        LoggedInAccessPeeper loggedInAccessPeeper = this.accessGuardian.getLoggedInAccessPeeper();
+        UnLoggedAccessPeeper unLoggedAccessPeeper = this.accessGuardian.getUnLoggedAccessPeeper();
 
-        if (requestInterpreter.isUserLoggedIn() && !isUserAtGameUrl.apply(currentPath)) {
-            response.sendRedirect("/hangman");
+        if (isUserLoggedIn && !loggedInAccessPeeper.contains(currentPath)) {
+            response.sendRedirect(loggedInAccessPeeper.getDefaultPath());
+            return false;
 
-        } else if (!requestInterpreter.isUserLoggedIn() && !isUserAtLoginUrl.apply(currentPath)) {
-            response.sendRedirect("/");
+        } else if (!isUserLoggedIn && !unLoggedAccessPeeper.contains(currentPath)) {
+            response.sendRedirect(unLoggedAccessPeeper.getDefaultPath());
+            return false;
         }
 
         return true;

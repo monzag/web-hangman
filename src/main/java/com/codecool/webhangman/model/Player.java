@@ -22,7 +22,7 @@ public class Player {
     public Player(String nick) {
         this.nick = nick;
         this.creationTime = new Date();
-        this.healthPoints = 5;
+        this.healthPoints = 7;
     }
 
     //region setters and getters

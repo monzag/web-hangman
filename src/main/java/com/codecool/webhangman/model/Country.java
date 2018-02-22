@@ -39,7 +39,7 @@ public class Country {
     }
 
     public String getCapital() {
-        return capital;
+        return capital.toLowerCase();
     }
 
     public void setCapital(String capital) {
