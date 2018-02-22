@@ -1,8 +1,7 @@
 package com.codecool.webhangman.controller;
 
-import com.codecool.webhangman.model.TemplateProcessorFacade;
 import com.codecool.webhangman.service.GameInitializerService;
-import com.codecool.webhangman.view.StartPageView;
+import com.codecool.webhangman.view.LoginPageView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,19 +13,19 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/")
-public class StartHandler {
-    private StartPageView startPageView;
+public class LoginHandler {
+    private LoginPageView loginPageView;
     private GameInitializerService gameInitializerService;
 
-    public StartHandler(GameInitializerService gameInitializerService,
-                        StartPageView startPageView) {
+    public LoginHandler(GameInitializerService gameInitializerService,
+                        LoginPageView loginPageView) {
         this.gameInitializerService = gameInitializerService;
 
     }
 
     @GetMapping
     public String getStartScreen() {
-        return this.startPageView.loadStartPageContent();
+        return this.loginPageView.loadStartPageContent();
     }
 
     @PostMapping

@@ -4,7 +4,7 @@ import com.codecool.webhangman.model.TemplateProcessorFacade;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StartPageView {
+public class LoginPageView {
 
     public String loadStartPageContent() {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
