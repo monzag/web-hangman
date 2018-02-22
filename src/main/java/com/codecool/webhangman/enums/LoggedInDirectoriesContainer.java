@@ -8,6 +8,7 @@ import com.codecool.webhangman.service.permissionsmanagementservice.WebDirectory
 public enum LoggedInDirectoriesContainer implements WebDirectory {
     @DefaultRoute
     MAIN_HANGMAN_VIEW("/hangman"),
+
     GAME_END("/hangman/end"),
     GAME_EXIT("/hangman/exit"),
     GAME_RULES("/hangman/rules");
