@@ -5,7 +5,7 @@ import com.codecool.webhangman.model.Player;
 import com.codecool.webhangman.model.PlayerActivity;
 import com.codecool.webhangman.model.Score;
 import com.codecool.webhangman.service.GameStateAnalyserService;
-import com.codecool.webhangman.model.TemplateProcessorFacade;
+import com.codecool.webhangman.service.TemplateProcessorFacade;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.codecool.webhangman.view;
 
-import com.codecool.webhangman.model.TemplateProcessorFacade;
+import com.codecool.webhangman.service.TemplateProcessorFacade;
 import org.springframework.stereotype.Service;
 
 @Service
