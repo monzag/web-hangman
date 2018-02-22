@@ -1,9 +1,10 @@
 package com.codecool.webhangman.controller;
 
+import com.codecool.webhangman.service.sessioninterpreter.RequestInterpreter;
+import com.codecool.webhangman.service.sessioninterpreter.SessionInterpreterService;
 import com.codecool.webhangman.service.permissionsmanagementservice.AccessGuardian;
 import com.codecool.webhangman.service.permissionsmanagementservice.LoggedInAccessPeeper;
 import com.codecool.webhangman.service.permissionsmanagementservice.UnLoggedAccessPeeper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -11,15 +12,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.function.Function;
 
 @Controller
 @Scope("prototype")
 public class SessionManager implements HandlerInterceptor {
     private AccessGuardian accessGuardian;
+    private SessionInterpreterService sessionInterpreterService;
 
-    public SessionManager(AccessGuardian accessGuardian) {
+    public SessionManager(AccessGuardian accessGuardian,
+                          SessionInterpreterService sessionInterpreterService) {
         this.accessGuardian = accessGuardian;
+        this.sessionInterpreterService = sessionInterpreterService;
     }
 
     //region setters and getters
@@ -37,7 +40,7 @@ public class SessionManager implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
+        RequestInterpreter requestInterpreter = this.sessionInterpreterService.create(request);
         boolean isUserLoggedIn = requestInterpreter.isUserLoggedIn();
         String currentPath = request.getServletPath();
 

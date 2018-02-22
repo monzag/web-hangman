@@ -1,13 +1,8 @@
 package com.codecool.webhangman.controller;
 
-import com.codecool.webhangman.model.Activity;
-import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
-import com.codecool.webhangman.model.TemplateProcessorFacade;
-import com.codecool.webhangman.service.GameLeadService;
-import com.codecool.webhangman.service.GameInitializerService;
-import com.codecool.webhangman.service.GameStateAnalyserService;
-import com.codecool.webhangman.service.HighScoresService;
+import com.codecool.webhangman.model.PlayerActivity;
+import com.codecool.webhangman.service.*;
 import com.codecool.webhangman.view.GameView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,31 +21,35 @@ public class GameHandler {
     private GameStateAnalyserService gameStateAnalyserService;
     private HighScoresService highScoresService;
     private GameInitializerService gameInitService;
+    private SessionInterpreterFacade sessionInterpreterFacade;
 
     public GameHandler(GameLeadService gameLeadService,
                        GameView gameView,
                        GameStateAnalyserService gameStateAnalyserService,
                        HighScoresService highScoresService,
-                       GameInitializerService gameInitializerService) {
+                       GameInitializerService gameInitializerService,
+                       SessionInterpreterFacade sessionInterpreterFacade) {
 
         this.gameLeadService = gameLeadService;
         this.gameView = gameView;
         this.gameStateAnalyserService = gameStateAnalyserService;
         this.highScoresService = highScoresService;
         this.gameInitService = gameInitializerService;
+        this.sessionInterpreterFacade = sessionInterpreterFacade;
     }
 
     @GetMapping
     public String doGet(HttpServletRequest request) {
-        return this.gameView.prepareGetContent(request);
+        PlayerActivity playerActivity = this.sessionInterpreterFacade.getPlayerActivity(request);
+        return this.gameView.prepareGetContent(playerActivity);
     }
 
     @PostMapping
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Activity activity = handleTurn(request);
-        GuessTable guessTable = getGuessTable(request);
+        PlayerActivity playerActivity = handleTurn(request);
+        String xxx = this.gameStateAnalyserService.getCapitalAsGuess(playerActivity.getGuessTable());
 
-        if (activity.hasPlayerWon(this.gameStateAnalyserService.getCapitalAsGuess(guessTable)) || activity.hasPlayerLost()) {
+        if (playerActivity.hasPlayerWon(xxx) || playerActivity.hasPlayerLost()) {
             response.sendRedirect("/hangman/end");
 
         } else {
@@ -58,9 +57,17 @@ public class GameHandler {
         }
     }
 
+    private PlayerActivity handleTurn(HttpServletRequest request) {
+        PlayerActivity currentActivity = this.sessionInterpreterFacade.getPlayerActivity(request);
+        String userGuess = request.getParameter("user-guess");
+        this.gameLeadService.doNextMove(currentActivity, userGuess);
+        return currentActivity;
+    }
+
+
     @GetMapping(path = "/end")
     public String getEndGame(HttpServletRequest request) throws IOException {
-        Player player = getPlayer(request);
+        Player player = this.sessionInterpreterFacade.getPlayer(request);
 
         if (player.getHealthPoints() < 1) {
             return this.gameView.getLoseView(player);
@@ -72,7 +79,8 @@ public class GameHandler {
 
     @PostMapping("/end")
     public void playAgain(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        gameInitService.initializeRegisterPlayer(request, getPlayer(request));
+        Player player = this.sessionInterpreterFacade.getPlayer(request);
+        gameInitService.initializeRegisterPlayer(request, player);
         response.sendRedirect("/hangman");
     }
 
@@ -85,24 +93,5 @@ public class GameHandler {
     public void exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
         response.sendRedirect("/");
-    }
-
-    private Activity handleTurn(HttpServletRequest request) {
-        Player player = getPlayer(request);
-        GuessTable guessTable = getGuessTable(request);
-        String userGuess = request.getParameter("user-guess");
-        this.gameLeadService.doNextMove(guessTable, player, userGuess);
-
-        return new Activity(player, guessTable);
-    }
-
-    private Player getPlayer(HttpServletRequest request) {
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
-        return requestInterpreter.retrievePlayer();
-    }
-
-    private GuessTable getGuessTable(HttpServletRequest request) {
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
-        return requestInterpreter.retrieveGuessTable();
     }
 }

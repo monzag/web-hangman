@@ -1,14 +1,13 @@
 package com.codecool.webhangman.view;
 
-import com.codecool.webhangman.controller.SessionInterpreter;
 import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
+import com.codecool.webhangman.model.PlayerActivity;
 import com.codecool.webhangman.model.Score;
-import com.codecool.webhangman.model.TemplateProcessorFacade;
 import com.codecool.webhangman.service.GameStateAnalyserService;
+import com.codecool.webhangman.model.TemplateProcessorFacade;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -19,10 +18,10 @@ public class GameView {
         this.gameStateAnalyserService = gameStateAnalyserService;
     }
 
-    public String prepareGetContent(HttpServletRequest request) {
+    public String prepareGetContent(PlayerActivity playerActivity) {
         TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
-        Player player = getPlayer(request);
-        GuessTable guessTable = getGuessTable(request);
+        Player player = playerActivity.getPlayer();
+        GuessTable guessTable = playerActivity.getGuessTable();
         String path = this.gameStateAnalyserService.getHangmanPath(player);
         String guess = this.gameStateAnalyserService.getCapitalAsGuess(guessTable);
 
@@ -40,16 +39,6 @@ public class GameView {
         processor.modelWith("game_board", contentPath);
 
         return processor.render();
-    }
-
-    private Player getPlayer(HttpServletRequest request) {
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
-        return requestInterpreter.retrievePlayer();
-    }
-
-    private GuessTable getGuessTable(HttpServletRequest request) {
-        SessionInterpreter.RequestInterpreter requestInterpreter = SessionInterpreter.create(request);
-        return requestInterpreter.retrieveGuessTable();
     }
 
     public String getWinView(Player player, List<Score> scoreList) {

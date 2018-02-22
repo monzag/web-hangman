@@ -1,10 +1,10 @@
 package com.codecool.webhangman.model;
 
-public class Activity {
-    public final Player player;
-    public final GuessTable guessTable;
+public class PlayerActivity {
+    private final Player player;
+    private final GuessTable guessTable;
 
-    public Activity(Player player, GuessTable guessTable) {
+    public PlayerActivity(Player player, GuessTable guessTable) {
         this.player = player;
         this.guessTable = guessTable;
     }
@@ -24,5 +24,13 @@ public class Activity {
 
     public boolean hasPlayerLost() {
         return player.getHealthPoints() < 1;
+    }
+
+    public Player getPlayer( ) {
+        return player;
+    }
+
+    public GuessTable getGuessTable( ) {
+        return guessTable;
     }
 }
