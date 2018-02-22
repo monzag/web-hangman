@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class HighscoreService {
+public class HighScoresService {
 
     private ScoreDao scoreDao;
 
-    public HighscoreService(ScoreDao scoreDao) {
+    public HighScoresService(ScoreDao scoreDao) {
         this.scoreDao = scoreDao;
     }
 
-    public List<Score> getHighscore() {
+    public List<Score> getHighScores() {
         return scoreDao.findTop10ByOrderByMillisecondsSpentAsc();
     }
 
-    public void addToHighscore(Player player) {
+    public void addToHighScore(Player player) {
         Score score = new Score(player);
         scoreDao.save(score);
     }
