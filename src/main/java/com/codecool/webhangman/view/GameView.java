@@ -77,4 +77,17 @@ public class GameView {
 
         return processor;
     }
+
+    public String getRulesPageContent() {
+        TemplateProcessorFacade processor = new TemplateProcessorFacade("/templates/startScreen.twig");
+
+        String contentCss = "classpath:/" + "templates/cssSettings/game-end-css-snippet.html";
+        processor.modelWith("content_css", contentCss);
+        String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
+        processor.modelWith("content_path", contentPath);
+        contentPath = "classpath:/" + "templates/backgroundsnippets/game-rules.html";
+        processor.modelWith("game_board", contentPath);
+
+        return processor.render();
+    }
 }
