@@ -14,13 +14,13 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/")
 public class LoginHandler {
-    private LoginPageView loginPageView;
     private GameInitializerService gameInitializerService;
+    private LoginPageView loginPageView;
 
     public LoginHandler(GameInitializerService gameInitializerService,
                         LoginPageView loginPageView) {
         this.gameInitializerService = gameInitializerService;
-
+        this.loginPageView = loginPageView;
     }
 
     @GetMapping
