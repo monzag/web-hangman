@@ -49,7 +49,6 @@ public class GameStateAnalyserService {
 
     public String getHangmanPath(Player player) {
         return this.drawService.getDrawPath(player.getHealthPoints());
-
     }
 
     public String getHint(Player player, GuessTable guessTable) {
