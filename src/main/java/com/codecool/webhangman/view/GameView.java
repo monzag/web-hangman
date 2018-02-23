@@ -1,13 +1,11 @@
 package com.codecool.webhangman.view;
 
-import com.codecool.webhangman.model.GuessTable;
-import com.codecool.webhangman.model.Player;
-import com.codecool.webhangman.model.PlayerActivity;
-import com.codecool.webhangman.model.Score;
+import com.codecool.webhangman.model.*;
 import com.codecool.webhangman.service.GameStateAnalyserService;
 import com.codecool.webhangman.service.TemplateProcessorFacade;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +22,8 @@ public class GameView {
         GuessTable guessTable = playerActivity.getGuessTable();
         String path = this.gameStateAnalyserService.getHangmanPath(player);
         String guess = this.gameStateAnalyserService.getCapitalAsGuess(guessTable);
-        Long gameTime = this.gameStateAnalyserService.getCurrentGameTime(player);
+        Long gameTime = this.gameStateAnalyserService.getCurrentGameTimeAsMillis(player);
+        GameTimer gameTimer = new GameTimer(gameTime);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
@@ -32,7 +31,7 @@ public class GameView {
         processor.modelWith("guess", guess);
         processor.modelWith("photo_src", path);
         processor.modelWith("guessTable", guessTable);
-        processor.modelWith("startCount", (gameTime));
+        processor.modelWith("timer", gameTimer);
         processor.modelWith("hint", this.gameStateAnalyserService.getHint(player, guessTable));
 
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
