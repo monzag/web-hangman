@@ -7,7 +7,7 @@ public class GameTimer {
     public GameTimer(long millis) {
         long seconds = millis / 1000;
 
-        this.seconds = seconds;
+        this.seconds = (seconds % 60);
         this.minutes = (seconds / 60);
     }
 
