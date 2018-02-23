@@ -4,7 +4,7 @@ create table player
     constraint player_pkey
     primary key,
   nick varchar(255),
-  score integer
+  creation_time TIMESTAMP
 )
 ;
 

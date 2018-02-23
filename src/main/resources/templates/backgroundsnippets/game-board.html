@@ -1,0 +1,49 @@
+<section class="game-board">
+ <div class="draw">
+    <figure>
+        <img src="{{ photo_src }}">
+    </figure>
+    <h3>{{ guess }}</h3>
+    <form method="POST">
+        <div class="inputField">
+            <label for="name-input-box">Your guess:</label>
+            <input type="text" name="user-guess" id="name-input-box" required>
+            <button type="submit">check</button>
+        </div>
+    </form>
+ </div>
+ <div class="usage">
+    <h1>user :       {{ player.getNick() }}</h1>
+    <h1>time: <label id="minutes">00</label>:<label id="seconds">00</label> </h1>
+     <br/>
+    <h1>user guess:</h1>
+    <div class="answers">
+        <p> letters  {{ guessTable.getUsedLetters() }}</p>
+    </div>
+     <div class="answers">
+         <p> words   {{ guessTable.getUsedWords() }}</p>
+     </div>
+     <h1>{{ hint }}</h1>
+ </div>
+</section>
+<script>
+    var minutesLabel = document.getElementById("minutes");
+    var secondsLabel = document.getElementById("seconds");
+    var totalSeconds = {{ startCount}};
+    setInterval(setTime, 1000);
+
+    function setTime() {
+        ++totalSeconds;
+        secondsLabel.innerHTML = pad(totalSeconds % 60);
+        minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+    }
+
+    function pad(val) {
+        var valString = val + "";
+        if (valString.length < 2) {
+            return "0" + valString;
+        } else {
+            return valString;
+        }
+    }
+</script>

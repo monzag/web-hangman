@@ -1,9 +1,9 @@
 package com.codecool.webhangman.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Player {
@@ -13,13 +13,16 @@ public class Player {
     private Integer id;
 
     private String nick;
-    private Integer score;
+    private Date creationTime;
     private transient Integer healthPoints;
 
-    public Player(String nick, Integer score, Integer healthPoints) {
+    public Player() {
+    }
+
+    public Player(String nick) {
         this.nick = nick;
-        this.score = score;
-        this.healthPoints = healthPoints;
+        this.creationTime = new Date();
+        this.healthPoints = 7;
     }
 
     //region setters and getters
@@ -27,8 +30,8 @@ public class Player {
         return nick;
     }
 
-    public Integer getScore() {
-        return score;
+    public Date getCreationTime( ) {
+        return creationTime;
     }
 
     public Integer getHealthPoints() {
@@ -47,18 +50,10 @@ public class Player {
         this.nick = nick;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
     public void setHealthPoints(Integer healthPoints) {
         this.healthPoints = healthPoints;
     }
     //endregion
-
-    public void addPoints(Integer points) {
-        this.score += points;
-    }
 
     public void reduceHealthPoints(Integer amount) {
         this.healthPoints -= amount;
