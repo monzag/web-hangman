@@ -14,7 +14,7 @@
  </div>
  <div class="usage">
     <h1>user :       {{ player.getNick() }}</h1>
-    <h1>time:</h1>
+    <h1>time: <label id="minutes">00</label>:<label id="seconds">00</label> </h1>
      <br/>
     <h1>user guess:</h1>
     <div class="answers">
@@ -26,3 +26,24 @@
      <h1>{{ hint }}</h1>
  </div>
 </section>
+<script>
+    var minutesLabel = document.getElementById("minutes");
+    var secondsLabel = document.getElementById("seconds");
+    var totalSeconds = {{ startCount}};
+    setInterval(setTime, 1000);
+
+    function setTime() {
+        ++totalSeconds;
+        secondsLabel.innerHTML = pad(totalSeconds % 60);
+        minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+    }
+
+    function pad(val) {
+        var valString = val + "";
+        if (valString.length < 2) {
+            return "0" + valString;
+        } else {
+            return valString;
+        }
+    }
+</script>
