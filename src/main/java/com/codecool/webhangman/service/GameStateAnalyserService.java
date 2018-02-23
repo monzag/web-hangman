@@ -4,6 +4,7 @@ import com.codecool.webhangman.model.GuessTable;
 import com.codecool.webhangman.model.Player;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -59,5 +60,10 @@ public class GameStateAnalyserService {
         }
 
         return hint;
+    }
+
+    public Long getCurrentGameTime(Player player) {
+        Date currentTime = new Date();
+        return (currentTime.getTime() - player.getCreationTime().getTime())/1000;
     }
 }
