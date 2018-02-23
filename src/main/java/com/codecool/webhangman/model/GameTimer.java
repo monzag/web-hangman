@@ -3,10 +3,12 @@ package com.codecool.webhangman.model;
 public class GameTimer {
     private long seconds;
     private long minutes;
+    private long millis;
 
     public GameTimer(long millis) {
-        long seconds = millis / 1000;
+        this.millis = millis;
 
+        long seconds = millis / 1000;
         this.seconds = (seconds % 60);
         this.minutes = (seconds / 60);
     }
@@ -17,6 +19,10 @@ public class GameTimer {
 
     public long getMinutes( ) {
         return minutes;
+    }
+
+    public long getMillis() {
+        return millis;
     }
 
     public String convertToTwoDigitFormat(long number) {
