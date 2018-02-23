@@ -14,7 +14,8 @@
  </div>
  <div class="usage">
     <h1>user :       {{ player.getNick() }}</h1>
-    <h1>time: <label id="minutes">00</label>:<label id="seconds">00</label> </h1>
+    <h1>time: <label id="minutes">{{ timer.convertToTwoDigitFormat(timer.getMinutes()) }}</label>:
+              <label id="seconds">{{ timer.convertToTwoDigitFormat(timer.getSeconds()) }}</label> </h1>
      <br/>
     <h1>user guess:</h1>
     <div class="answers">
@@ -29,7 +30,8 @@
 <script>
     var minutesLabel = document.getElementById("minutes");
     var secondsLabel = document.getElementById("seconds");
-    var totalSeconds = {{ startCount}};
+    var totalSecondsWithPrecision = {{ timer.getMillis() / 1000 }};
+    var totalSeconds = totalSecondsWithPrecision.toFixed(0);
     setInterval(setTime, 1000);
 
     function setTime() {
