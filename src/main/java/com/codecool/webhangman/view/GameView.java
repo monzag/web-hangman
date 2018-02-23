@@ -24,6 +24,7 @@ public class GameView {
         GuessTable guessTable = playerActivity.getGuessTable();
         String path = this.gameStateAnalyserService.getHangmanPath(player);
         String guess = this.gameStateAnalyserService.getCapitalAsGuess(guessTable);
+        Long gameTime = this.gameStateAnalyserService.getCurrentGameTime(player);
 
         String contentCss = "classpath:/" + "templates/cssSettings/game-css-snippet.html";
         processor.modelWith("content_css", contentCss);
@@ -31,6 +32,7 @@ public class GameView {
         processor.modelWith("guess", guess);
         processor.modelWith("photo_src", path);
         processor.modelWith("guessTable", guessTable);
+        processor.modelWith("startCount", (gameTime));
         processor.modelWith("hint", this.gameStateAnalyserService.getHint(player, guessTable));
 
         String contentPath = "classpath:/" + "templates/backgroundsnippets/game-menu.twig";
