@@ -51,9 +51,11 @@ public class GameView {
         return processor.render();
     }
 
-    public String getLoseView(Player player) {
+    public String getLoseView(Player player, List<Score> scoreList) {
         TemplateProcessorFacade processor = gameEndProcessor();
+
         processor.modelWith("result_text", player.getNick() + " - you lose :(");
+        processor.modelWith("highscore", scoreList);
 
         return processor.render();
     }
