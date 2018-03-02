@@ -70,7 +70,7 @@ public class GameHandler {
         Player player = this.sessionInterpreterFacade.getPlayer(request);
 
         if (player.getHealthPoints() < 1) {
-            return this.gameView.getLoseView(player);
+            return this.gameView.getLoseView(player, this.highScoresService.getHighScores());
         } else {
             highScoresService.addToHighScore(player);
             return this.gameView.getWinView(player, this.highScoresService.getHighScores());
